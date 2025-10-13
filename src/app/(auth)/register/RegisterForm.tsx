@@ -27,6 +27,7 @@ export default function RegisterForm() {
 
     if (result.status === 'success') {
       console.log('user succeffully registerdd');
+      router.push('/register/success');
     } else {
       if (Array.isArray(result.error)) {
         result.error.forEach((e: any) => {
