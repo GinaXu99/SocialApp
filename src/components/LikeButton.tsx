@@ -1,6 +1,4 @@
-'use client';
-
-import { toggle } from '@heroui/react';
+import { toggle } from '@/components/ui/heroui';
 import { useRouter } from 'next/router';
 import React from 'react';
 import { AiFillHeart, AiOutlineHeart } from 'react-icons/ai';

@@ -1,8 +1,7 @@
-'use client';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { HeroUIProvider } from '@heroui/react';
+import { HeroUIProvider } from '@/components/ui/heroui';
 import React, { ReactNode } from 'react';
 export default function Providers({ children }: { children: ReactNode }) {
   return (

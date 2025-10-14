@@ -1,6 +1,9 @@
-'use client';
-
-import { Button, Navbar, NavbarBrand, NavbarContent } from '@heroui/react';
+import {
+  Button,
+  Navbar,
+  NavbarBrand,
+  NavbarContent,
+} from '@/components/ui/heroui';
 import Link from 'next/link';
 import React from 'react';
 import { GiSelfLove } from 'react-icons/gi';

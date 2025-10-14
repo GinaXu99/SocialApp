@@ -1,6 +1,10 @@
-'use client';
-
-import { Button, Card, CardBody, CardHeader, Input } from '@heroui/react';
+import {
+  Button,
+  Card,
+  CardBody,
+  CardHeader,
+  Input,
+} from '@/components/ui/heroui';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 

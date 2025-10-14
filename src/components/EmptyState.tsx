@@ -1,4 +1,4 @@
-import { Card, CardBody, CardHeader } from '@heroui/react';
+import { Card, CardBody, CardHeader } from '@/components/ui/heroui';
 import React from 'react';
 
 export default function EmptyState() {

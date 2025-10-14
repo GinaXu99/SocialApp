@@ -1,4 +1,10 @@
-import { CardHeader, Button, Card, CardBody, CardFooter } from '@heroui/react';
+import {
+  CardHeader,
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+} from '@/components/ui/heroui';
 import { ReactNode } from 'react';
 import { IconType } from 'react-icons';
 

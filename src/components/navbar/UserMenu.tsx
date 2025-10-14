@@ -7,7 +7,7 @@ import {
   DropdownMenu,
   DropdownSection,
   DropdownTrigger,
-} from '@heroui/react';
+} from '@/components/ui/heroui';
 import { Session } from 'next-auth';
 import React from 'react';
 import { useRouter } from 'next/navigation';
