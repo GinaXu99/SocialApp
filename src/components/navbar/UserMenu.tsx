@@ -13,10 +13,13 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 
 type Props = {
-  user: Session['user'];
+  userInfo: {
+    name: string | null;
+    image: string | null;
+  } | null;
 };
 
-export default function UserMenu({ user }: Props) {
+export default function UserMenu({ userInfo }: Props) {
   const router = useRouter();
 
   return (
@@ -27,9 +30,9 @@ export default function UserMenu({ user }: Props) {
           as='button'
           className='transition-transform'
           color='default'
-          name={user?.name || 'user avatar'}
+          name={userInfo?.name || 'user avatar'}
           size='sm'
-          src={user?.image || '/images/user.png'}
+          src={userInfo?.image || '/images/user.png'}
         />
       </DropdownTrigger>
       <DropdownMenu variant='flat' aria-label='user actions menu'>
@@ -41,7 +44,7 @@ export default function UserMenu({ user }: Props) {
             className='h-13 flex flex-row'
             aria-label='username'
           >
-            Sign in as {user?.name}
+            Sign in as {userInfo?.name}
           </DropdownItem>
         </DropdownSection>
         <DropdownItem

@@ -13,6 +13,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { RegisterSchema, registerSchema } from '@/lib/schemas/RegisterSchema';
 import { registerUser } from '@/app/actions/authActions';
+
+import { handleFormServerErrors } from '@/lib/util';
 export default function RegisterForm() {
   const {
     register,
@@ -33,19 +35,7 @@ export default function RegisterForm() {
       console.log('user succeffully registerdd');
       router.push('/register/success');
     } else {
-      if (Array.isArray(result.error)) {
-        result.error.forEach((e: any) => {
-          console.log('e::', e);
-          const fieldName = e.path.join('.') as 'email' | 'name' | 'password';
-          setError(fieldName, {
-            message: e.message,
-          });
-        });
-      } else {
-        setError('root.severError', {
-          message: result.error,
-        });
-      }
+      handleFormServerErrors(result, setError);
     }
   };
   const onBack = () => {};

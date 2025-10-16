@@ -10,9 +10,10 @@ import React from 'react';
 import { GiSelfLove } from 'react-icons/gi';
 import NavLink from './NavLink';
 import UserMenu from './UserMenu';
-
+import { getUserInfoForNav } from '@/app/actions/userActions';
 export default async function TopNav() {
   const session = await auth();
+  const userInfo = session?.user && (await getUserInfoForNav());
 
   const memberLinks = [
     { href: '/members', label: 'Matches' },
@@ -38,8 +39,8 @@ export default async function TopNav() {
         ))}
       </NavbarContent>
       <NavbarContent justify='end'>
-        {session?.user ? (
-          <UserMenu user={session.user} />
+        {userInfo ? (
+          <UserMenu userInfo={userInfo} />
         ) : (
           <>
             <Button as={Link} href='/login' variant='bordered' color='default'>

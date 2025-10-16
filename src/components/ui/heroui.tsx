@@ -1,7 +1,6 @@
 'use client';
 
 // Re-export all HeroUI components as client components
-// Import from this file instead of @heroui/react in your server components
 export {
   // Layout Components
   Card,
@@ -61,4 +60,12 @@ export {
   Tabs,
   HeroUIProvider,
   toggle,
+
+  //Table
+  Table,
+  TableBody,
+  TableCell,
+  TableColumn,
+  TableHeader,
+  TableRow,
 } from '@heroui/react';
