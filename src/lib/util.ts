@@ -21,7 +21,7 @@ export function handleFormServerErrors<TFieldValues extends FieldValues>(
 }
 
 export function formatShortDateTime(date: Date) {
-  return format(date, 'dd MM yy h:mm:a');
+  return format(date, 'dd MMM yy h:mm:a');
 }
 
 export function truncateString(text?: string | null, num = 50) {

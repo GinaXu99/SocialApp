@@ -1,3 +1,4 @@
+'use server';
 import { MessageSchema, messageSchema } from '@/lib/schemas/MessageSchema';
 import { ActionResult } from '@/types';
 import { Message } from '@prisma/client';
@@ -16,6 +17,7 @@ export async function createMessage(
       return { status: 'error', error: validated.error.errors };
 
     const { text } = validated.data;
+
     const message = await prisma.message.create({
       data: {
         text,
@@ -74,6 +76,16 @@ export async function getMessageThread(recipientId: string) {
       },
     });
 
+    /**
+ * 
+ *  Logic: 
+  1. Only marks incoming messages as read - Messages Bob sent TO you, not your messages to Bob
+  2. Only unread messages - dateRead: null ensures already-read messages aren't updated
+  3. Automatic read receipts - Bob can see you've read his messages (like WhatsApp's blue checkmarks)
+  4. Happens on page load - As soon as you view the chat, messages are marked read
+  This is a common messaging pattern where opening/viewing a conversation automatically marks incoming
+  messages as read.
+ */
     if (messages.length > 0) {
       await prisma.message.updateMany({
         where: {
@@ -180,5 +192,3 @@ export async function deleteMessage(messageId: string, isOutbox: boolean) {
     throw error;
   }
 }
-
-

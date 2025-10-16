@@ -12,6 +12,7 @@ import { HiPaperAirplane } from 'react-icons/hi';
 export default function ChatForm() {
   const router = useRouter();
   const params = useParams<{ userId: string }>();
+
   const {
     register,
     handleSubmit,

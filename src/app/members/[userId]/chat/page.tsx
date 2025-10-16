@@ -8,10 +8,12 @@ import ChatForm from './ChatForm';
 export default async function ChatPage({
   params,
 }: {
-  params: { userId: string };
+  params: Promise<{ userId: string }>;
 }) {
-  const messages = await getMessageThread(params.userId);
-  const userId = await getAuthUserId();
+  const { userId } = await params;
+  const messages = await getMessageThread(userId);
+
+  const currentUserId = await getAuthUserId();
 
   const body = (
     <div>
@@ -23,7 +25,7 @@ export default async function ChatPage({
             <MessageBox
               key={message.id}
               message={message}
-              currentUserId={userId}
+              currentUserId={currentUserId}
             />
           ))}
         </div>
