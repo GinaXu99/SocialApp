@@ -2,10 +2,9 @@
 
 import { registerSchema, RegisterSchema } from '@/lib/schemas/RegisterSchema';
 import { ActionResult } from '@/types';
-import { TokenType, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import bcrypt from 'bcryptjs';
 import { prisma } from '@/lib/prisma';
-import { create } from 'domain';
 import { LoginSchema } from '@/lib/schemas/LoginSchema';
 import { auth, signIn, signOut } from '@/auth';
 import { AuthError } from 'next-auth';

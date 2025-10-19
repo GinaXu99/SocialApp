@@ -3,6 +3,7 @@
 import { auth } from '@/auth';
 import { prisma } from '@/lib/prisma';
 import { Photo } from '@prisma/client';
+import { getAuthUserId } from './authActions';
 
 export async function getMembers() {
   const session = await auth();
@@ -39,4 +40,16 @@ export async function getMemberPhotosByUserId(userId: string) {
   });
   if (!member) return null;
   return member.photos.map((p) => p) as Photo[];
+}
+
+export async function updateLastActive() {
+  const userId = await getAuthUserId();
+  try {
+    return prisma.member.update({
+      where: { userId },
+      data: { updated: new Date() },
+    });
+  } catch (error) {
+    console.log(error);
+  }
 }

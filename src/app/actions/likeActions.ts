@@ -2,10 +2,12 @@
 
 import { prisma } from '@/lib/prisma';
 import { getAuthUserId } from './authActions';
+import { pusherServer } from '@/lib/pusher';
 
 export async function toggleLikeMember(targetUserId: string, isLiked: boolean) {
   try {
     const userId = await getAuthUserId();
+
     if (isLiked) {
       await prisma.like.delete({
         where: {
@@ -16,11 +18,26 @@ export async function toggleLikeMember(targetUserId: string, isLiked: boolean) {
         },
       });
     } else {
-      await prisma.like.create({
+      const like = await prisma.like.create({
         data: {
           targetUserId,
           sourceUserId: userId,
         },
+        select: {
+          sourceMember: {
+            select: {
+              name: true,
+              image: true,
+              userId: true,
+            },
+          },
+        },
+      });
+
+      await pusherServer.trigger(`private-${targetUserId}`, 'like:new', {
+        name: like.sourceMember.name,
+        image: like.sourceMember.image,
+        userId: like.sourceMember.userId,
       });
     }
   } catch (error) {
@@ -85,6 +102,7 @@ async function fetchMutualLikes(userId: string) {
 export async function fetchLikedMembers(type = 'source') {
   try {
     const userId = await getAuthUserId();
+    
     switch (type) {
       case 'source':
         return await fetchSourceLikes(userId);

@@ -8,14 +8,16 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  passwordHash  String?
-  image         String?
-  accounts      Account[]
-  member        Member?
+  id              String    @id @default(cuid())
+  name            String?
+  email           String?   @unique
+  emailVerified   DateTime?
+  passwordHash    String?
+  image           String?
+  accounts        Account[]
+  member          Member?
+  profileComplete Boolean   @default(false)
+  role            Role      @default(MEMBER)
 }
 
 model Account {
@@ -68,6 +70,11 @@ model Photo {
   publicId String?
   memberId String
   member   Member  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+}
+
+enum Role {
+  ADMIN
+  MEMBER
 }
 
 model Like {

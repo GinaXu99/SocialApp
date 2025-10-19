@@ -5,7 +5,7 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import React, { useState } from 'react';
 import { GoInbox } from 'react-icons/go';
 import { MdOutlineOutbox } from 'react-icons/md';
-
+import useMessageStore from '@/hooks/useMessageStore';
 export default function MessageSidebar() {
   const searchParams = useSearchParams();
   const pathname = usePathname();
@@ -36,6 +36,8 @@ export default function MessageSidebar() {
     router.replace(`${pathname}?${params}`);
   };
 
+  const unreadCount = useMessageStore((state) => state.unreadCount);
+
   return (
     <div className='flex flex-col shadow-md rounded-lg cursor-pointer'>
       {items.map(({ key, icon: Icon, label, chip }) => (
@@ -50,7 +52,7 @@ export default function MessageSidebar() {
           <Icon size={23} />
           <div className='flex justify-between flex-grow'>
             <span>{label}</span>
-            {chip && <Chip>2</Chip>}
+            {chip && <Chip>{unreadCount}</Chip>}
           </div>
         </div>
       ))}

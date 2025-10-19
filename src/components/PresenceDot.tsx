@@ -1,11 +1,15 @@
 import { Member } from '@prisma/client';
 import React from 'react';
 import { GoDot, GoDotFill } from 'react-icons/go';
-
+import usePresenceStore from '@/hooks/usePresenceStore';
 type Props = {
   member: Member;
 };
 export default function PresenceDot({ member }: Props) {
+  const membersId = usePresenceStore((state) => state.membersId);
+
+  const isOnline = membersId.indexOf(member.userId) !== -1;
+  if (!isOnline) return null;
   return (
     <>
       <GoDot
