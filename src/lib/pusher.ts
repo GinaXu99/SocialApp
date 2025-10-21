@@ -16,18 +16,25 @@ if (!globalThis.pusherServerInstance) {
   });
 }
 
-if (typeof window !== 'undefined' && !globalThis.pusherClientInstance) {
-  globalThis.pusherClientInstance = new PusherClient(
-    process.env.NEXT_PUBLIC_PUSHER_APP_KEY!,
-    {
-      cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER_ID!,
-      channelAuthorization: {
-        endpoint: '/api/pusher-auth',
-        transport: 'ajax',
-      },
-    }
-  );
-}
-
 export const pusherServer = globalThis.pusherServerInstance;
-export const pusherClient = globalThis.pusherClientInstance;
+
+export function getPusherClient() {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  if (!globalThis.pusherClientInstance) {
+    globalThis.pusherClientInstance = new PusherClient(
+      process.env.NEXT_PUBLIC_PUSHER_APP_KEY!,
+      {
+        cluster: process.env.NEXT_PUBLIC_PUSHER_CLUSTER_ID!,
+        channelAuthorization: {
+          endpoint: '/api/pusher-auth',
+          transport: 'ajax',
+        },
+      }
+    );
+  }
+
+  return globalThis.pusherClientInstance;
+}

@@ -1,11 +1,8 @@
 import CardInnerWrapper from '@/components/CardInnerWrapper';
 import { getMessageThread } from '@/app/actions/messageActions';
-import MessageBox from './MessageBox';
-import { getAuthUserId } from '@/app/actions/authActions';
 import React from 'react';
 import ChatForm from './ChatForm';
 import MessageList from './MessageList';
-import { channel } from 'diagnostics_channel';
 import { createChatId } from '@/lib/util';
 
 export default async function ChatPage({

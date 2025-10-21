@@ -17,6 +17,7 @@ const usePresenceStore = create<PresenceState>()(
         set((state) => ({
           membersId: state.membersId.filter((memberId) => memberId !== id),
         })),
+      set: (ids) => set({ membersId: ids }),
     }),
 
     { name: 'PresenceStoreDemo' }

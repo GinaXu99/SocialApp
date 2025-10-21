@@ -1,8 +1,9 @@
+'use client';
 import { useCallback, useEffect, useRef } from 'react';
 import usePresenceStore from './usePresenceStore';
 import { Channel, Members } from 'pusher-js';
 import { updateLastActive } from '@/app/actions/memberActions';
-import { pusherClient } from '@/lib/pusher';
+import { getPusherClient } from '@/lib/pusher';
 
 export const usePresenceChannel = (
   userId: string | null,
@@ -37,11 +38,14 @@ export const usePresenceChannel = (
 
   useEffect(() => {
     if (!userId || !profileComplete) return;
+    const pusherClient = getPusherClient();
+    if (!pusherClient) return;
+
     if (!channelRef.current) {
       channelRef.current = pusherClient.subscribe('presence-match-me');
 
       channelRef.current.bind(
-        'pusher:subscription_succeeed',
+        'pusher:subscription_succeeded',
         async (members: Members) => {
           handleSetMembers(Object.keys(members.members));
           await updateLastActive();
@@ -66,7 +70,7 @@ export const usePresenceChannel = (
         if (channelRef.current) {
           channelRef.current.unsubscribe();
           channelRef.current.unbind(
-            'pusher:subscription_succeeed',
+            'pusher:subscription_succeeded',
             handleSetMembers
           );
           channelRef.current.unbind('pusher:member_added', handleAddMember);

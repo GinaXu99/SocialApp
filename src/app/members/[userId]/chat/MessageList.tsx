@@ -3,7 +3,7 @@ import { MessageDto } from '@/types';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import useMessageStore from '@/hooks/useMessageStore';
 import MessageBox from './MessageBox';
-import { pusherClient } from '@/lib/pusher';
+import { getPusherClient } from '@/lib/pusher';
 import { formatShortDateTime } from '@/lib/util';
 
 type Props = {
@@ -25,18 +25,11 @@ export default function MessageList({
   const setReadCount = useRef(false);
   const updateUnreadCount = useMessageStore((state) => state.updateUnreadCount);
 
-  useEffect(() => {
-    if (!setReadCount.current) {
-      updateUnreadCount(-initialMessages.readCount);
-    }
-    setReadCount.current = true;
-  }, [initialMessages.readCount, updateUnreadCount]);
-
   const handleNewMessage = useCallback((message: MessageDto) => {
     setMessages((prevState) => {
       return [...prevState, message];
     });
-  });
+  }, []);
 
   const handleReadMessages = useCallback((messageIds: string[]) => {
     setMessages((prevState) =>
@@ -52,6 +45,16 @@ export default function MessageList({
   }, []);
 
   useEffect(() => {
+    if (!setReadCount.current) {
+      updateUnreadCount(-initialMessages.readCount);
+    }
+    setReadCount.current = true;
+  }, [initialMessages.readCount, updateUnreadCount]);
+
+  useEffect(() => {
+    const pusherClient = getPusherClient();
+    if (!pusherClient) return;
+
     const channel = pusherClient.subscribe(chatId);
     channel.bind('message:new', handleNewMessage);
     channel.bind('message:read', handleReadMessages);
@@ -60,7 +63,8 @@ export default function MessageList({
       channel.unbind('message:new', handleNewMessage);
       channel.unbind('message:read', handleReadMessages);
     };
-  }, [chatId]);
+  }, [chatId, handleNewMessage, handleReadMessages]);
+
   return (
     <div>
       {messages.length === 0 ? (

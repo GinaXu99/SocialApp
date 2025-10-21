@@ -112,7 +112,7 @@ export async function getMessageThread(recipientId: string) {
 
       await pusherServer.trigger(
         createChatId(recipientId, userId),
-        'messages:read',
+        'message:read',
         unreadMessageIds
       );
     }

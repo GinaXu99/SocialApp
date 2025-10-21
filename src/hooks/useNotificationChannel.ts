@@ -1,4 +1,6 @@
-import { pusherClient } from '@/lib/pusher';
+'use client';
+
+import { getPusherClient } from '@/lib/pusher';
 import { MessageDto } from '@/types';
 import { usePathname, useSearchParams } from 'next/navigation';
 import { Channel } from 'pusher-js';
@@ -41,6 +43,9 @@ export const useNotificationChannel = (
 
   useEffect(() => {
     if (!userId || !profileComplete) return;
+    const pusherClient = getPusherClient();
+    if (!pusherClient) return;
+
     if (!channelRef.current) {
       channelRef.current = pusherClient.subscribe(`private-${userId}`);
       channelRef.current.bind('message:new', handleNewMesage);
