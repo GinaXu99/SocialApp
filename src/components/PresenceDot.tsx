@@ -1,7 +1,7 @@
 import { Member } from '@prisma/client';
 import React from 'react';
 import { GoDot, GoDotFill } from 'react-icons/go';
-import usePresenceStore from '@/hooks/usePresenceStore';
+import {usePresenceStore} from '@/hooks/usePresenceStore';
 type Props = {
   member: Member;
 };

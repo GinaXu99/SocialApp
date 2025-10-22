@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Card,
   CardHeader,
@@ -5,7 +7,7 @@ import {
   Button,
   Input,
 } from '@/components/ui/heroui';
-import React, { useState } from 'react';
+import React,  from 'react';
 import { useForm } from 'react-hook-form';
 
 import { GiPadlock } from 'react-icons/gi';
@@ -88,10 +90,6 @@ export default function RegisterForm() {
               >
                 Register
               </Button>
-              {/* <div className='flex flex-row items-center gap-6'>
-                <Button onClick={onBack}>Back</Button>
-                <Button onClick={onNext}>Submit</Button>
-              </div> */}
             </div>
           </div>
         </form>

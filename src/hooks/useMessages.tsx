@@ -22,10 +22,10 @@ const inboxColumns = [
   { key: 'actions', label: 'Actions' },
 ];
 
-export default function UseMessages(
+export const useMessages = (
   initialMessages: MessageDto[],
   nextCursor?: string
-) {
+) => {
   const set = useMessageStore((state) => state.set);
   const remove = useMessageStore((state) => state.remove);
   const messages = useMessageStore((state) => state.messages);
@@ -33,12 +33,14 @@ export default function UseMessages(
   const resetMessages = useMessageStore((state) => state.resetMessages);
 
   const cursorRef = useRef(nextCursor);
+
   const searchParams = useSearchParams();
   const container = searchParams.get('container');
 
   const router = useRouter();
 
   const isOutbox = container === 'outbox';
+
   const [isDeleting, setDeleting] = useState({
     id: '',
     loading: false,
@@ -55,7 +57,7 @@ export default function UseMessages(
     return () => {
       resetMessages();
     };
-  }, [initialMessages, set, nextCursor]);
+  }, [initialMessages, set, nextCursor, resetMessages]);
 
   const loadMore = useCallback(async () => {
     if (cursorRef.current) {
@@ -64,10 +66,10 @@ export default function UseMessages(
         container,
         cursorRef.current
       );
+      set(messages);
+      cursorRef.current = nextCursor;
+      setLoadingMore(false);
     }
-    set(messages);
-    cursorRef.current = nextCursor;
-    setLoadingMore(false);
   }, [container, set]);
 
   const handleDeleteMessage = useCallback(
@@ -81,7 +83,7 @@ export default function UseMessages(
       if (!message.dateRead && !isOutbox) updateUnReadCount(-1);
       setDeleting({ id: '', loading: false });
     },
-    [isOutbox, router, updateUnReadCount]
+    [isOutbox, updateUnReadCount, remove]
   );
 
   const handleRowSelect = (key: Key) => {
@@ -103,4 +105,4 @@ export default function UseMessages(
     loadMore,
     hasMore: !!cursorRef.current,
   };
-}
+};

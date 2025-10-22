@@ -13,7 +13,7 @@ import {
 
 import React from 'react';
 import MessageTableCell from './MessageTableCell';
-import UseMessages from '@/hooks/useMessages';
+import {useMessages} from '@/hooks/useMessages';
 
 type Props = {
   initialMessages: MessageDto[];
@@ -31,7 +31,7 @@ export default function MessageTable({ initialMessages, nextCursor }: Props) {
     loadMore,
     loadingMore,
     hasMore,
-  } = UseMessages(initialMessages, nextCursor);
+  } = useMessages(initialMessages, nextCursor);
 
   return (
     <div className='flex flex-col h-[80vh]'>
@@ -86,7 +86,7 @@ export default function MessageTable({ initialMessages, nextCursor }: Props) {
             color='default'
             isLoading={loadingMore}
             isDisabled={!hasMore}
-            onClick={loadMore}
+            onPress={loadMore}
           >
             {hasMore ? 'Load More' : 'No more message'}
           </Button>

@@ -8,7 +8,7 @@ type PresenceState = {
   set: (ids: string[]) => void;
 };
 
-const usePresenceStore = create<PresenceState>()(
+export const usePresenceStore = create<PresenceState>()(
   devtools(
     (set) => ({
       membersId: [],
@@ -24,4 +24,4 @@ const usePresenceStore = create<PresenceState>()(
   )
 );
 
-export default usePresenceStore;
+

@@ -68,4 +68,8 @@ export {
   TableColumn,
   TableHeader,
   TableRow,
+  Pagination,
+  Slider,
+  Switch,
+  type Selection,
 } from '@heroui/react';

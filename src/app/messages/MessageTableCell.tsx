@@ -41,7 +41,7 @@ export default function MessageTableCell({
         <Button
           isIconOnly
           variant='light'
-          onClick={() => deleteMessage(item)}
+          onPress={() => deleteMessage(item)}
           isLoading={isDeleting}
         >
           <AiFillDelete size={24} className='text-danger' />

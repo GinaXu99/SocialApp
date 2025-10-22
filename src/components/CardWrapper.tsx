@@ -44,7 +44,7 @@ export default function CardWrapper({
         <CardFooter className='flex flex-col justify-center'>
           {action && (
             <Button
-              onClick={action}
+              onPress={action}
               fullWidth
               color='default'
               variant='bordered'

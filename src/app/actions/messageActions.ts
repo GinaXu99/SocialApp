@@ -144,7 +144,7 @@ export async function getMessagesByContainer(
     const messages = await prisma.message.findMany({
       where: {
         ...conditions,
-        ...(cursor ? { created: { lte: new Date(cursor) } } : {}),
+        ...(cursor ? { createdAt: { lte: new Date(cursor) } } : {}),
       },
       orderBy: {
         createdAt: 'desc',

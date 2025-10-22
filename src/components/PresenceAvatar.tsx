@@ -1,4 +1,4 @@
-import usePresenceStore from '@/hooks/usePresenceStore';
+import { usePresenceStore } from '@/hooks/usePresenceStore';
 import { Avatar, Badge } from '@/components/ui/heroui';
 import React from 'react';
 
