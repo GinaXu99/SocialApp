@@ -7,7 +7,10 @@ import CardInnerWrapper from '@/components/CardInnerWrapper';
 export default async function MemberEditPage() {
   const userId = await getAuthUserId();
   const member = await getMemberByUserId(userId);
-  
+
+  console.log(userId);
+  console.log(member);
+
   if (!member) return notFound();
 
   return (

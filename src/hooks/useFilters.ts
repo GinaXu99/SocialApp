@@ -13,14 +13,10 @@ export const useFilters = () => {
 
   const { filters, setFilters } = useFilterStore();
 
-  const { pageNumber, pageSize, setPage, totalCount } = usePaginationStore(
-    (state) => ({
-      pageNumber: state.pagination.pageNumber,
-      pageSize: state.pagination.pageSize,
-      setPage: state.setPage,
-      totalCount: state.pagination.totalCount,
-    })
-  );
+  const pageNumber = usePaginationStore((state) => state.pagination.pageNumber);
+  const pageSize = usePaginationStore((state) => state.pagination.pageSize);
+  const setPage = usePaginationStore((state) => state.setPage);
+  const totalCount = usePaginationStore((state) => state.pagination.totalCount);
 
   const { gender, ageRange, orderBy, withPhoto } = filters;
 
@@ -54,7 +50,7 @@ export const useFilters = () => {
   ]);
 
   const orderByList = [
-    { label: 'Last Active', value: ' updated' },
+    { label: 'Last Active', value: 'updated' },
     { label: 'Newest Members', value: 'createdAt' },
   ];
 
